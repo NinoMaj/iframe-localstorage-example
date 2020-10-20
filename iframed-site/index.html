@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>iFramed site</title>
+    <style>
+      .iframed-site {
+        height: 200px;
+        width: 200px;
+        background: lightblue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="iframed-site">iFramed site</div>
+    <script>
+      const LOCAL_STORAGE_KEY = 'cartId'
+
+      const parentWindow = window.parent
+      parentWindow.postMessage('iframe loaded', '*')
+
+      window.addEventListener(
+        'message',
+        (event) => {
+          if (event.data.type === 'save cart id') {
+            localStorage.setItem(LOCAL_STORAGE_KEY, event.data.value)
+          }
+        },
+        false,
+      )
+    </script>
+  </body>
+</html>
